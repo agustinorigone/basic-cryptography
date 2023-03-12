@@ -4,18 +4,19 @@ import time
 start = time.time()
 
 def isPrime(p):
-  #iterate from p-1 until 1
-  for i in range(p,2,-1):
+  #exclude 1
+  if p == 1:
+    return 0
+
+  for i in range(2,p-1):
     #get the quotient
-    quotient = p/(i-1)
+    quotient = p/i
     
-    #if we can find any integer quotient then p is not prime
+    #check if the quotient is an integer value => p is not prime
     if(int(quotient) == quotient):
-      #print result and break (there is no need to keep on iterating)
-      print("RESULT:",p,"is not a prime number")
-      break
+      return 0
   else:
-    print("RESULT:",p,"is a prime number")
+    return 1
   
 
 #check if p is provided as an argument
@@ -24,10 +25,15 @@ if len(sys.argv) < 2:
   print("USAGE: python3 q1.py 9")
 else:
   #initilialize p
-  p = sys.argv[1]
+  p = int(sys.argv[1])
 
   #run isPrime function
-  isPrime(int(p))
+  result = isPrime(p)
+
+  if result == 1:
+    print("RESULT:", p, "is a prime number")
+  else:
+    print("RESULT:", p, "is not a prime number")
 
 end = time.time()
 print("TIME:",end - start, "seconds")
